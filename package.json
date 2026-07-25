@@ -1,0 +1,95 @@
+{
+  "name": "mail-it",
+  "version": "0.1.0",
+  "private": true,
+  "main": "electron/main.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build && node scripts/prepare-standalone.js",
+    "start": "next start",
+    "lint": "next lint",
+    "electron:build": "tsc -p electron/tsconfig.json",
+    "electron:launch": "npm run electron:build && wait-on tcp:3000 && cross-env NEXT_SERVER_EXTERNAL=true electron .",
+    "electron:dev": "concurrently -k -n NEXT,ELECTRON -c blue,green \"npm run dev\" \"npm run electron:launch\"",
+    "electron:prod": "npm run build && npm run electron:build && electron .",
+    "dist": "npm run build && npm run electron:build && electron-builder"
+  },
+  "dependencies": {
+    "@tiptap/extension-link": "^3.28.0",
+    "@tiptap/extension-placeholder": "^3.28.0",
+    "@tiptap/extension-underline": "^3.28.0",
+    "@tiptap/react": "^3.28.0",
+    "@tiptap/starter-kit": "^3.28.0",
+    "cloudinary": "^2.10.0",
+    "lucide-react": "^1.26.0",
+    "mongoose": "^9.8.0",
+    "next": "14.2.35",
+    "nodemailer": "^9.0.3",
+    "react": "^18",
+    "react-dom": "^18",
+    "uuid": "^14.0.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.20",
+    "@types/node": "^20",
+    "@types/nodemailer": "^8.0.1",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "@types/uuid": "^10.0.0",
+    "concurrently": "^10.0.3",
+    "cross-env": "^10.1.0",
+    "electron": "^43.2.0",
+    "electron-builder": "^26.15.3",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.35",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "tsx": "^4.23.1",
+    "typescript": "^5",
+    "wait-on": "^9.1.0"
+  },
+  "build": {
+    "appId": "com.mailit.app",
+    "productName": "Mail It",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "electron/main.js",
+      "electron/preload.js",
+      "electron/splash.html",
+      "electron/assets/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": ".next/standalone",
+        "to": "standalone",
+        "filter": [
+          "**/*"
+        ]
+      },
+      {
+        "from": ".next/standalone/node_modules",
+        "to": "standalone/node_modules",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "electron/assets/logo.png"
+    },
+    "mac": {
+      "target": "dmg",
+      "category": "public.app-category.productivity",
+      "icon": "electron/assets/logo.png"
+    },
+    "linux": {
+      "target": "AppImage",
+      "category": "Network",
+      "icon": "electron/assets/logo.png"
+    }
+  }
+}
