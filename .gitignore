@@ -50,3 +50,5 @@ Thumbs.db
 # Electron Builder diagnostics
 builder-debug.yml
 builder-effective-config.yaml
+
+.vercel
