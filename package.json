@@ -5,7 +5,7 @@
   "main": "electron/main.js",
   "scripts": {
     "dev": "next dev",
-    "build": "cross-env NEXT_DIST_DIR=.next-build next build && cross-env NEXT_DIST_DIR=.next-build node scripts/prepare-standalone.js",
+    "build": "node scripts/build.js",
     "start": "next start",
     "lint": "next lint",
     "electron:build": "tsc -p electron/tsconfig.json",
