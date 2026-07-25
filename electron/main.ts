@@ -79,7 +79,7 @@ function resolveStandaloneServerPath(): string {
   const unpackaged = path.join(
     __dirname,
     "..",
-    ".next",
+    ".next-build",
     "standalone",
     "server.js"
   );
