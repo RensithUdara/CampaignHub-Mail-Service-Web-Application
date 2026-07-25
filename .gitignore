@@ -18,8 +18,6 @@
 /electron/preload.js
 
 # Local environment files
-.env
-.env.*
 !.env.example
 !.env.local.example
 
@@ -52,3 +50,4 @@ builder-debug.yml
 builder-effective-config.yaml
 
 .vercel
+config.bat
