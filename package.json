@@ -1,11 +1,11 @@
 {
-  "name": "mail-it",
+  "name": "campaignhub",
   "version": "0.1.0",
   "private": true,
   "main": "electron/main.js",
   "scripts": {
     "dev": "next dev",
-    "build": "next build && node scripts/prepare-standalone.js",
+    "build": "cross-env NEXT_DIST_DIR=.next-build next build && cross-env NEXT_DIST_DIR=.next-build node scripts/prepare-standalone.js",
     "start": "next start",
     "lint": "next lint",
     "electron:build": "tsc -p electron/tsconfig.json",
@@ -49,8 +49,8 @@
     "wait-on": "^9.1.0"
   },
   "build": {
-    "appId": "com.mailit.app",
-    "productName": "Mail It",
+    "appId": "com.campaignhub.app",
+    "productName": "CampaignHub",
     "directories": {
       "output": "dist"
     },
