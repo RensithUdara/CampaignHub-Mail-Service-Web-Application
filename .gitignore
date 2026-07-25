@@ -1,42 +1,52 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# dependencies
-/node_modules
-/.pnp
+# Dependencies
+/node_modules/
+/.pnp/
 .pnp.js
 .yarn/install-state.gz
 
-# testing
-/coverage
-
-# next.js
+# Next.js build output
 /.next/
+/.next-build/
 /out/
 
-# production
-/build
-
-# electron
-/dist
-/dist-electron
+# Production and Electron output
+/build/
+/dist/
+/dist-electron/
+/release/
 /electron/main.js
 /electron/preload.js
 
-# misc
-.DS_Store
-*.pem
+# Local environment files
+.env
+.env.*
+!.env.example
+!.env.local.example
 
-# debug
+# Logs and debug files
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
+*.log
 
-# local env files
-.env*.local
+# Tests and coverage
+/coverage/
 
-# vercel
-.vercel
+# Caches
+.eslintcache
+.turbo/
+.vercel/
 
-# typescript
+# TypeScript
 *.tsbuildinfo
 next-env.d.ts
+
+# OS and certificates
+.DS_Store
+Thumbs.db
+*.pem
+
+# Electron Builder diagnostics
+builder-debug.yml
+builder-effective-config.yaml
