@@ -2,7 +2,6 @@ import { app, BrowserWindow, dialog } from "electron";
 import path from "node:path";
 import http from "node:http";
 import fs from "node:fs";
-import { ChildProcess, spawn } from "node:child_process";
 
 process.on("uncaughtException", (err) => {
   console.error(err);
@@ -22,7 +21,6 @@ const ICON_PATH = path.join(__dirname, "assets", "logo.png");
 
 let mainWindow: BrowserWindow | null = null;
 let splashWindow: BrowserWindow | null = null;
-let serverProcess: ChildProcess | null = null;
 
 function createSplashWindow() {
   splashWindow = new BrowserWindow({
@@ -99,30 +97,15 @@ function startNextServer(): Promise<void> {
       return;
     }
 
-    serverProcess = spawn(process.execPath, [serverPath], {
-      cwd: path.dirname(serverPath),
-      env: {
-        ...process.env,
-        PORT: String(PORT),
-        HOSTNAME: "localhost",
-        NODE_ENV: "production",
-        ELECTRON_RUN_AS_NODE: "1",
-      },
-      stdio: "pipe",
-    });
-
-    serverProcess.stdout?.on("data", (data) => {
-      console.log(`[next] ${data.toString().trim()}`);
-    });
-    serverProcess.stderr?.on("data", (data) => {
-      console.error(`[next] ${data.toString().trim()}`);
-    });
-    serverProcess.on("exit", (code, signal) => {
-      console.log(`Next.js server exited with code ${code} signal ${signal}`);
-    });
-    serverProcess.on("error", reject);
-
-    waitForServerReady().then(resolve).catch(reject);
+    try {
+      process.env.PORT = String(PORT);
+      process.env.HOSTNAME = "localhost";
+      process.env.NODE_ENV = "production";
+      require(serverPath);
+      waitForServerReady().then(resolve).catch(reject);
+    } catch (err) {
+      reject(err);
+    }
   });
 }
 
@@ -186,11 +169,5 @@ app.on("window-all-closed", () => {
 app.on("activate", () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     createMainWindow();
-  }
-});
-
-app.on("before-quit", () => {
-  if (serverProcess && !serverProcess.killed) {
-    serverProcess.kill();
   }
 });
