@@ -9,9 +9,9 @@
     "start": "next start",
     "lint": "next lint",
     "electron:build": "tsc -p electron/tsconfig.json",
-    "electron:launch": "npm run electron:build && wait-on tcp:3000 && cross-env ELECTRON_RUN_AS_NODE= NEXT_SERVER_EXTERNAL=true electron .",
+    "electron:launch": "npm run electron:build && wait-on tcp:3000 && cross-env NEXT_SERVER_EXTERNAL=true node scripts/run-electron.js",
     "electron:dev": "concurrently -k -n NEXT,ELECTRON -c blue,green \"npm run dev\" \"npm run electron:launch\"",
-    "electron:prod": "npm run build && npm run electron:build && cross-env ELECTRON_RUN_AS_NODE= electron .",
+    "electron:prod": "npm run build && npm run electron:build && node scripts/run-electron.js",
     "dist": "npm run build && npm run electron:build && electron-builder"
   },
   "dependencies": {
