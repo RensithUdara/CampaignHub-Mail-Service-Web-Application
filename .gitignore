@@ -52,3 +52,5 @@ builder-effective-config.yaml
 .vercel
 .env
 .env.*
+.env.local
+.env.production
