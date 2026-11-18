@@ -50,4 +50,5 @@ builder-debug.yml
 builder-effective-config.yaml
 
 .vercel
-config.bat
+.env
+.env.*
